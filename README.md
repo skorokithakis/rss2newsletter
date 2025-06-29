@@ -20,13 +20,14 @@ Common RSS feed sources you can turn into an email newsletter includes... your p
 
 ## Get Started
 
-1. [Download listmonk](https://listmonk.app/#download)
+1. [Download and install listmonk](https://listmonk.app/#download)
     - The listmonk server comes as a single binary that you can start in one command (set up with a provider like Amazon SES later)
 2. Get rss2newsletter: `pip3 install rss2newsletter`
     - Ensure you already have Python installed
     - If you prefer to use your system package manager then Git clone this repo and run the `install.sh` script
-3. Create rss2newsletter's [configuration file](https://raw.githubusercontent.com/ElliotKillick/rss2newsletter/main/rss2newsletter.conf) and design your email with the [newsletter template file](https://raw.githubusercontent.com/ElliotKillick/rss2newsletter/main/newsletter_template.html)
-4. Run `rss2newsletter` to start creating campaigns and sending out emails!
+3. Create a Listmonk admin API user and a Listmonk subscriber list to receive emails.
+4. Create rss2newsletter's [configuration file](https://raw.githubusercontent.com/ElliotKillick/rss2newsletter/main/rss2newsletter.conf) and design your email with the [newsletter template file](https://raw.githubusercontent.com/ElliotKillick/rss2newsletter/main/newsletter_template.html)
+5. Run `rss2newsletter` to start creating campaigns and sending out emails!
 
 ## Usage
 

@@ -1,8 +1,9 @@
 [project]
 name = "rss2newsletter"
-version = "1.0.5"
+version = "1.0.6"
 authors = [
   { name="Elliot Killick", email="contact@elliotkillick.com" },
+  { name="Quentin Stafford-Fraser", email="quentin@pobox.com" },
 ]
 description = "Convert RSS/Atom feed to email newsletters with listmonk"
 readme = "README.md"
@@ -12,7 +13,19 @@ classifiers = [
     "License :: OSI Approved :: GNU Affero General Public License v3 or later (AGPLv3+)",
     "Operating System :: OS Independent",
 ]
+dependencies = [
+    "requests",
+    "feedparser",
+    "lxml",
+]
+
+[project.scripts]
+rss2newsletter = "rss2newsletter:rss2newsletter"
 
 [project.urls]
 Homepage = "https://github.com/ElliotKillick/rss2newsletter"
 Issues = "https://github.com/ElliotKillick/rss2newsletter/issues"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
