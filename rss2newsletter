@@ -251,6 +251,7 @@ class rss2newsletter:
             "messenger": "email",
             "type": "regular",
             "tags": ["rss2newsletter"],
+            "template_id": int(self.config["LISTMONK"].get("TEMPLATE_ID", 1)),
         }
 
         while True:
