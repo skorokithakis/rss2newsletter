@@ -5,3 +5,8 @@ processed_entries.txt
 
 rss2newsletter.egg-info
 dist
+.venv
+__pycache__
+*.pyc
+*.pyo
+*.pyd
