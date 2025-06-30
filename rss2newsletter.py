@@ -43,15 +43,19 @@ class rss2newsletter:
         args = self.parse_args()
         self.config = self.read_config_file(args.config)
 
+        poll_interval = int(self.config["FEED"].get("POLL_INTERVAL", 600))
+
         while True:
             self.program_loop()
-            time.sleep(int(self.config["FEED"]["POLL_INTERVAL"]))
+            if not poll_interval:
+                break
+            time.sleep(poll_interval)
 
     def banner(self):
         """Print program banner"""
 
         print(
-            "\n"
+            "\nBased on...\n"
             "               d88b                             8        w    w\n"
             '8d8b d88b d88b " dP 8d8b. .d88b Yb  db  dP d88b 8 .d88b w8ww w8ww .d88b 8d8b\n'
             "8P   `Yb. `Yb.  dP  8P Y8 8.dP'  YbdPYbdP  `Yb. 8 8.dP'  8    8   8.dP' 8P\n"
