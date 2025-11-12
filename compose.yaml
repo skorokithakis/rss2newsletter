@@ -1,15 +1,9 @@
 services:
-  rss2newsletter:
-    image: rss2newsletter
+  main:
     build:
       context: .
-      dockerfile: Dockerfile
-    container_name: rss2newsletter
-    # restart: unless-stopped
+    restart: unless-stopped
     environment:
       - TZ=Europe/London
     volumes:
-      - ./rss2newsletter.conf:/app/rss2newsletter.conf
-      - ./newsletter_template.html:/app/newsletter_template.html
-      - ./processed_entries.txt:/app/processed_entries.txt
-    
+      - {{ HM_DATA_DIR }}:/data

@@ -1,22 +1,19 @@
 #!/usr/bin/python3
-
 # Copyright (C) 2024 Elliot Killick <contact@elliotkillick.com>
 # Licensed under the AGPL License. See LICENSE file for details.
-
 # pylint: disable=invalid-name
-
 """rss2newsletter application"""
-
 import argparse
-from datetime import datetime
-from typing import TextIO
 import configparser
-import time
 import os
 import re
+import time
 from collections.abc import Iterator
-import requests
+from datetime import datetime
+from typing import TextIO
+
 import feedparser
+import requests
 from lxml import etree
 
 
@@ -105,7 +102,14 @@ class rss2newsletter:
         for new_entry in self.check_for_new_entries(
             processed_entries_last_update, feed.entries
         ):
-            campaign_id = self.create_newsletter(new_entry.link, new_entry.title, datetime.strptime(new_entry.published, self.config["FEED"]["TIMESTAMP_FORMAT"]), new_entry.content[0].value)
+            campaign_id = self.create_newsletter(
+                new_entry.link,
+                new_entry.title,
+                datetime.strptime(
+                    new_entry.published, self.config["FEED"]["TIMESTAMP_FORMAT"]
+                ),
+                new_entry.summary,
+            )
             send_successful = self.send_newsletter(campaign_id)
             if send_successful:
                 self.update_processed_entries_file(new_entry.link)
@@ -171,13 +175,19 @@ class rss2newsletter:
             if entry.link not in proceseed_entries_last_update:
                 yield entry
 
-    def create_newsletter(self, link: str, title: str, timestamp: datetime, body:str) -> int | None:
+    def create_newsletter(
+        self, link: str, title: str, timestamp: datetime, body: str
+    ) -> int | None:
         """Create newsletter with content and add campaign to Listmonk"""
 
         print("Creating newsletter for:", title, "on", timestamp)
-        return self.create_campaign(title, self.create_content(link, title, timestamp, body))
+        return self.create_campaign(
+            title, self.create_content(link, title, timestamp, body)
+        )
 
-    def create_content(self, link: str, title: str, timestamp: datetime, body:str) -> str:
+    def create_content(
+        self, link: str, title: str, timestamp: datetime, body: str
+    ) -> str:
         """Create content to be used as body of newsletter"""
 
         with open(
@@ -187,7 +197,10 @@ class rss2newsletter:
 
         content = content.replace("LINK_HERE", link)
         content = content.replace("TITLE_HERE", title)
-        content = content.replace("TIMESTAMP_HERE", timestamp.strftime(self.config["NEWSLETTER"]["TIMESTAMP_FORMAT"]))
+        content = content.replace(
+            "TIMESTAMP_HERE",
+            timestamp.strftime(self.config["NEWSLETTER"]["TIMESTAMP_FORMAT"]),
+        )
         content = content.replace("BODY_HERE", body)
 
         og_image = self.get_og_image(self.fetch_url(link))
