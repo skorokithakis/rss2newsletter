@@ -261,6 +261,7 @@ class rss2newsletter:
         headers = {"Content-Type": "application/json;charset=utf-8"}
 
         name = self.config["NEWSLETTER"]["SUBJECT_LINE"].replace("TITLE_HERE", title)
+        from_email = self.config["LISTMONK"].get("FROM_EMAIL", "").strip()
 
         json_data = {
             "name": name,
@@ -273,6 +274,9 @@ class rss2newsletter:
             "tags": ["rss2newsletter"],
             "template_id": int(self.config["LISTMONK"].get("TEMPLATE_ID", 1)),
         }
+
+        if from_email:
+            json_data["from_email"] = from_email
 
         while True:
             try:
